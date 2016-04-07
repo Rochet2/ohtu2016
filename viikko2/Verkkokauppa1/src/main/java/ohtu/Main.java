@@ -16,6 +16,20 @@ public class Main {
         Kirjanpito kirjanpito = ctx.getBean(Kirjanpito.class);
         Kauppa kauppa = ctx.getBean(Kauppa.class);
 
+        testaaKauppaa(kauppa, kirjanpito);
+    }
+
+    private static void testaaKauppaa(Kauppa kauppa, Kirjanpito kirjanpito) {
+        testiAsiakas(kauppa);
+        uusiAsiakas(kauppa);
+
+        // kirjanpito
+        for (String tapahtuma : kirjanpito.getTapahtumat()) {
+            System.out.println(tapahtuma);
+        }
+    }
+
+    private static void testiAsiakas(Kauppa kauppa) {
         // kauppa hoitaa yhden asiakkaan kerrallaan seuraavaan tapaan:
         kauppa.aloitaAsiointi(new Ostoskori());
         kauppa.lisaaKoriin(1);
@@ -23,7 +37,9 @@ public class Main {
         kauppa.lisaaKoriin(3);
         kauppa.poistaKorista(1);
         kauppa.tilimaksu("Pekka Mikkola", "1234-12345");
+    }
 
+    private static void uusiAsiakas(Kauppa kauppa) {
         // seuraava asiakas
         kauppa.aloitaAsiointi(new Ostoskori());
         for (int i = 0; i < 24; i++) {
@@ -31,10 +47,5 @@ public class Main {
         }
 
         kauppa.tilimaksu("Arto Vihavainen", "3425-1652");
-
-        // kirjanpito
-        for (String tapahtuma : kirjanpito.getTapahtumat()) {
-            System.out.println(tapahtuma);
-        }
     }
 }
